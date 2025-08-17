@@ -18,19 +18,20 @@ app.add_middleware(
 class AskRequest(BaseModel):
     text: str
     question: str
+    diagram: str
 
 @app.post("/ask")
 def ask(req: AskRequest):
     # Step 1: RAG for text answer
-    answer = query_rag(req.text, req.question)
+    answer = query_rag(req.question, req.text)
 
     # Step 2: Generate diagram
-    #diagram_path = generate_diagram(f"diagram explaining: {answer}")
+    diagram_path = generate_diagram(f"diagram explaining: {req.diagram}")
 
     return {
         "answer": answer,
-        #"image_url": f"http://localhost:8000/{diagram_path}"
+        "image_url": f"http://localhost:8000/{diagram_path}"
     }
 
 # Serve generated images
-#app.mount("/generated", StaticFiles(directory="generated"), name="generated")
+app.mount("/generated", StaticFiles(directory="generated"), name="generated")
