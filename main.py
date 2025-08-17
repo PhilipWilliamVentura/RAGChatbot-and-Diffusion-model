@@ -3,23 +3,34 @@ from pydantic import BaseModel
 from rag import query_rag
 from diffusion import generate_diagram
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # your frontend
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 class AskRequest(BaseModel):
+    text: str
     question: str
 
 @app.post("/ask")
 def ask(req: AskRequest):
     # Step 1: RAG for text answer
-    answer = query_rag(req.question)
+    answer = query_rag(req.text, req.question)
 
     # Step 2: Generate diagram
-    diagram_path = generate_diagram(f"diagram explaining: {answer}")
+    #diagram_path = generate_diagram(f"diagram explaining: {answer}")
 
     return {
         "answer": answer,
-        "image_url": f"http://localhost:5000/{diagram_path}"
+        #"image_url": f"http://localhost:8000/{diagram_path}"
     }
 
-app.mount("/generated", StaticFiles(directory="generated"), name="generated")
+# Serve generated images
+#app.mount("/generated", StaticFiles(directory="generated"), name="generated")
