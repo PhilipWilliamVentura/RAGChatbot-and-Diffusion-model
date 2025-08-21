@@ -15,7 +15,7 @@ class VAE_AttentionBlock(nn.Module):
 
         residue = x
 
-        n, c, h, w = x.shape()
+        n, c, h, w = x.shape
         
         # (Batch_size, Features, Height, Width) -> (Batch_size, Features, Height * Width)
         x = x.view(n, c, h * w)

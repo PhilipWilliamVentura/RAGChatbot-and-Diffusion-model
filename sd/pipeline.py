@@ -18,9 +18,9 @@ def generate(prompt: str, uncond_prompt: str, input_image=None, strength=0.8,
             raise ValueError("strength must be between 0 and 1")
         
         if idle_device:
-            to_idle: lambda x: x.to(idle_device)
+            to_idle = lambda x: x.to(idle_device)
         else: 
-            to_idle: lambda x: x
+            to_idle = lambda x: x
         
         generator = torch.Generator(device=device)
         if seed is None:
@@ -55,7 +55,7 @@ def generate(prompt: str, uncond_prompt: str, input_image=None, strength=0.8,
 
         if sampler_name == 'ddpm':
             sampler = DDPMSampler(generator)
-            sampler.set_inference_steps(n_inference_steps)
+            sampler.set_inference_timesteps(n_inference_steps)
         else:
             raise ValueError(f"Unknown sampler {sampler_name}")
         
@@ -68,7 +68,7 @@ def generate(prompt: str, uncond_prompt: str, input_image=None, strength=0.8,
             input_image_tensor = input_image.resize((WIDTH, HEIGHT))
             input_image_tensor = np.array(input_image_tensor)
             # (Height, Width, Channel)
-            input_image_tensor = torch.tensor(input_image_tensor, dtype=torch.float32)
+            input_image_tensor = torch.tensor(input_image_tensor, dtype=torch.float32, device=device)
             input_image_tensor = rescale(input_image_tensor, (0, 255), (-1, 1))
             # (Height, Width, Channel) -> (Batch_size, Height, Width, Channel)
             input_image_tensor = input_image_tensor.unsqueeze(0)
@@ -94,7 +94,7 @@ def generate(prompt: str, uncond_prompt: str, input_image=None, strength=0.8,
         timesteps = tqdm(sampler.timesteps)
         for i, timestep in enumerate(timesteps):
             # (1, 320)
-            time_embedding = get_time_embedding(timesteps).to(device)
+            time_embedding = get_time_embedding(timestep).to(device)
 
             # (Batch_Size, 4, Latents_Height, Latents_Width)
             model_input = latents
