@@ -61,4 +61,3 @@ def generate(prompt: str, uncond_prompt: str, input_image=None, strength=0.8,
         
         latents_shape = (1, 4, LATENTS_HEIGHT, LATENTS_WIDTH)
 
-        
