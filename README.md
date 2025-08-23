@@ -16,7 +16,7 @@ The backend is fully built in **Python** using **FastAPI**, **PyTorch**, and **L
 
 ---
 
-## Features
+## 🔥 Features
 
 - **Diffusion Model from Scratch:** Generate images/diagrams from textual prompts.
 - **RAG Question-Answering:** Retrieve answers from user-provided text using embeddings and FAISS.
@@ -24,9 +24,9 @@ The backend is fully built in **Python** using **FastAPI**, **PyTorch**, and **L
 
 ---
 
-## Installation & Setup
+## 🚀 Installation & Setup
 
-### 1. Clone the Repository
+Clone the Repository
 
 ```bash
 git clone https://github.com/PhilipWilliamVentura/RAGChatbot-and-Diffusion-model.git
@@ -36,7 +36,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-4. Prepare the Data Folder for the Diffusion Model
+Prepare the Data Folder for the Diffusion Model
 Create the following folder structure:
 
 ```bash
