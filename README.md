@@ -18,7 +18,7 @@ The backend is fully built in **Python** using **FastAPI**, **PyTorch**, and **L
 
 ## 🔥 Features
 
-- **Diffusion Model from Scratch:** Generate images/diagrams from textual prompts.
+- **Diffusion Model from Scratch:** Generate images/diagrams from textual prompts or images.
 - **RAG Question-Answering:** Retrieve answers from user-provided text using embeddings and FAISS.
 - **Full-Stack Integration:** Backend powers the interactive AI companion on [Quant ML Labs](https://quantmllabs.vercel.app).
 
